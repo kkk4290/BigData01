@@ -5,13 +5,11 @@ def is_prime(number):
     :return: True if it is prime number else False, Returns true if it is a prime number, false if it is not a prime number.
     """
     if number >= 2:
-        i = 2
-        while i * i <= number:
-
+       for i in range(2, int(number**0.5) + 1):
             if number % i == 0:
                 return False
             #print(i, end=" ")
-            i = i + 1
+
     else:
         return False
     return True
