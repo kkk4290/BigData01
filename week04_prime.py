@@ -10,7 +10,7 @@ def is_prime(number):
 
             if number % i == 0:
                 return False
-            #print(i, end=" ")
+           
             i = i + 1
     else:
         return False
