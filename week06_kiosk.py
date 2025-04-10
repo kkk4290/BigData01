@@ -17,9 +17,11 @@ def order_process(index):
     total_price = total_price + prices[index]
     amounts[index] = amounts[index] + 1
 
-menu_texts = ""
-for j in range(len(drinks)):
-    menu_texts = menu_texts + f"{j+1}) {drinks[j]} {prices[j]}원 "
+# menu_texts = ""
+# for j in range(len(drinks)):
+#     menu_texts = menu_texts + f"{j+1}) {drinks[j]} {prices[j]}원 "
+# menu_texts = menu_texts + f"{len(drinks)+1}) 주문종료:"
+menu_texts = "".join([f"{j+1}) {drinks[j]} {prices[j]}원 " for j in range(len(drinks))])
 menu_texts = menu_texts + f"{len(drinks)+1}) 주문종료:"
 
 while True:
