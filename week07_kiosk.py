@@ -31,7 +31,7 @@ def display_menu() -> str:
 def print_receipt() -> None:
     """
     영수증 출력 가능
-    :return: 없음
+    :return: 없음11
     """
     print(f"{'상품명':^20}{'단가':^6}{'수량':^6}{'금액':^6}")
     for i in range(len(drinks)):
