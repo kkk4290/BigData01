@@ -39,3 +39,9 @@ def print_receipt() -> None:
 
     print(f"총 주문 금액 : {total_price}원")
 
+def test() -> None:
+    """
+
+    :return:
+    """
+    pass
