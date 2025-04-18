@@ -16,5 +16,6 @@ while True:
     except ValueError:
              print(f"문자를 입력할 수 없습니다. 숫자를 입력해주세요")
 print_receipt()
-
+#test()
+#print(total_price)
 
