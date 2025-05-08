@@ -16,5 +16,5 @@ if __name__ == "__main__":
         except ValueError:
                  print(f"문자를 입력할 수 없습니다. 숫자를 입력해주세요")
     kk.print_receipt()
-
+    print (f"번호표 : {kk.get_ticket_number()}")
 
