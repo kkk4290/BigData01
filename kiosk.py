@@ -6,6 +6,14 @@ prices = [1500, 2500, 4000, 4200]
 total_price = 0
 amounts = [0] * len(drinks)  # amounts = [0 for _ in range(len(drinks))]
 
+def apply_discount(price: int) -> float:
+    """
+    통 금액이 특정 금액(임께값)을 넘어서면 할인율 적용 함수
+    :param price: 할인 전 총 금액
+    :return: 할인이 적용된 금액 또는 할인이 적용되지 않은 금액
+    """
+    pass
+
 def order_process(idx: int) -> None:
     """
     주문 처리 함수 1) 주문 디스플레이  2) 총 주문 금액 누산  3) 주문 품목 수량 업데이트
