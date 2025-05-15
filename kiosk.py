@@ -1,8 +1,8 @@
 import datetime
+import sqlite3
 
 drinks = ["아이스 아메리카노", "카페 라떼", "수박 주스", "딸기 주스"]
 prices = [1500, 2500, 4000, 4200]
-
 # drinks = ["아이스 아메리카노"]
 # prices = [1500]
 total_price = 0
@@ -45,16 +45,27 @@ def get_ticket_number() -> None:
     주문 번호표 출력 함수
     :return: None
     """
-    try:
-       with open("ticket.txt", "r") as fp:
-           number = int(fp.read())
-    except FileNotFoundError:
-        number = 0
+    conn = sqlite3.connect('cafe.db')  # db instance open
+    cur = conn.cursor()
 
-    number = number + 1
+    cur.execute('''
+        create table if not exists ticket(
+        id integer primary key autoincrement,
+        number integer not null
+        )
+    ''')
 
-    with open("ticket.txt", "w") as fp:
-        fp.write(str(number))
+    cur.execute('select number from ticket order by number desc limit 1')
+    result = cur.fetchone()
+
+    if result is None:
+        number = 1
+        cur.execute('insert into ticket (number) values (?)', (number,))
+    else:
+        number = result[0] + 1
+        cur.execute('insert into ticket (number) values (?)', (number,))
+
+    conn.commit()
     print(f"번호표 : {number}")
     #return number
 
@@ -99,6 +110,7 @@ def print_receipt() -> None:
     else:
         print(f"할인이 적용 되지 않았습니다.\n지불하실 총 금액은 {total_price}원 입니다")
     print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
 def test() -> None:
     """
 
