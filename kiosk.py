@@ -8,7 +8,7 @@ amounts = [0] * len(drinks)  # amounts = [0 for _ in range(len(drinks))]
 
 #할인 적용 정책 * 상수를 쓸때는 항상 대문자로
 DISCOUNT_THRESHOLD = 10000 # 할인이 적용되는 임계값(임계값 이상이면 할인 적용)
-DISCOUNT_RATE = 0.1 # 할인율
+DISCOUNT_RATE = 0.05 # 할인율
 
 def run() -> None:
     """
@@ -92,7 +92,7 @@ def print_receipt() -> None:
 
     print(f"할인 전 총 주문 금액 : {total_price}원")
     if discount > 0:
-        print(f"할인 금액 : {discount}원")
+        print(f"할인 금액 : {discount}원 ({DISCOUNT_RATE*100}% 할인)")
         print(f"할인 적용 후 지불하실 총 금액 : {discounted_price}원 입니다")
     else:
         print(f"할인이 적용 되지 않았습니다.\n지불하실 총 금액은 {total_price}원 입니다")
