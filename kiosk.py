@@ -1,4 +1,5 @@
-import datetime
+#import datetime
+from datetime import datetime
 import sqlite3
 
 drinks = ["아이스 아메리카노", "카페 라떼", "수박 주스", "딸기 주스"]
@@ -51,25 +52,26 @@ def get_ticket_number() -> None:
     cur.execute('''
         create table if not exists ticket(
         id integer primary key autoincrement,
-        number integer not null
+        number integer not null,
+        created_at text not null default (datetime('now', 'localtime'))
         )
     ''')
 
     cur.execute('select number from ticket order by number desc limit 1')
     result = cur.fetchone()
 
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     if result is None:
         number = 1
-        cur.execute('INSERT INTO ticket (number) VALUES (?)', (number,))
+        cur.execute('INSERT INTO ticket (number, created_at) VALUES (?, ?)', (number,now))
 
     else:
         number = result[0] + 1
-        #cur.execute('INSERT INTO ticket (number) VALUES (?)', (number,))
-        cur.execute('update ticket set number=? where id = (select id from ticket order by number desc limit 1)',
-                    (number,))
+        cur.execute('INSERT INTO ticket (number, created_at) VALUES (?, ?)', (number, now))
+        #cur.execute('update ticket set number=? where id = (select id from ticket order by number desc limit 1)', (number,))
 
     conn.commit()
-    print(f"번호표 : {number}")
+    print(f"번호표 : {number} ")
     #return number
 
 def order_process(idx: int) -> None:
@@ -112,7 +114,7 @@ def print_receipt() -> None:
         print(f"할인 적용 후 지불하실 총 금액 : {discounted_price}원 입니다")
     else:
         print(f"할인이 적용 되지 않았습니다.\n지불하실 총 금액은 {total_price}원 입니다")
-    print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 def test() -> None:
     """

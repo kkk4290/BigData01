@@ -1,5 +1,5 @@
-#dml
-
+#ddl create(created_at firld)
+#dml update -> insert
 import kiosk as kk
 
 if __name__ == "__main__":
