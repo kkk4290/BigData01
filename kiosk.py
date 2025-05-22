@@ -71,7 +71,7 @@ def get_ticket_number() -> None:
         #cur.execute('update ticket set number=? where id = (select id from ticket order by number desc limit 1)', (number,))
 
     conn.commit()
-    print(f"번호표 : {number} ")
+    print(f"번호표 : {number} ({now})")
     #return number
 
 def order_process(idx: int) -> None:
