@@ -1,6 +1,7 @@
 #import datetime
 from datetime import datetime
 import sqlite3
+import requests
 
 drinks = ["아이스 아메리카노", "카페 라떼", "수박 주스", "딸기 주스"]
 prices = [1500, 2500, 4000, 4200]
@@ -81,7 +82,7 @@ def order_process(idx: int) -> None:
     :return: 없음
     """
     global total_price
-    print(f"{drinks[idx]}를 주문하셨습니다. 가격은 {prices[idx]}원 입니다")
+    print(f"{drinks[idx]}를 주문하셨습니다. 가격은 {prices[idx]}원 입니다\n")
     total_price = total_price + prices[idx]
     amounts[idx] = amounts[idx] + 1
 
@@ -90,6 +91,17 @@ def display_menu() -> str:
     음료 선택 메뉴 디스플레이 기능
     :return: 음료 메뉴 및 주문 종료 문자열
     """
+    url = f"http://wttr.in/suwon?format=%C+%t&lang=ko"
+    #url = f"http://naver.com/kim"  #404 page not found
+    #url = f"http://wttr123.in/suwon?format=%C+%t&lang=ko" #website address error
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            print(response.text.strip())
+        else:
+            print(f"상태코드: {response.status_code}")
+    except Exception as err:
+        print(f"오류: {err}")
     print("="*30)
     menu_texts = "".join([f"{j+1}) {drinks[j]} {prices[j]}원\n" for j in range(len(drinks))])
     menu_texts = menu_texts + f"{len(drinks)+1}) 주문종료 : "
