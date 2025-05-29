@@ -42,7 +42,7 @@ def apply_discount(price: int) -> float:
         return price * (1 - DISCOUNT_RATE)
     return price
 
-def get_ticket_number() -> None:
+def print_ticket_number() -> None:
     """
     주문 번호표 출력 함수
     :return: None
@@ -73,6 +73,7 @@ def get_ticket_number() -> None:
 
     conn.commit()
     print(f"번호표 : {number} ({now})")
+
     #return number
 
 def order_process(idx: int) -> None:
@@ -91,17 +92,7 @@ def display_menu() -> str:
     음료 선택 메뉴 디스플레이 기능
     :return: 음료 메뉴 및 주문 종료 문자열
     """
-    url = f"http://wttr.in/suwon?format=%C+%t&lang=ko"
-    #url = f"http://naver.com/kim"  #404 page not found
-    #url = f"http://wttr123.in/suwon?format=%C+%t&lang=ko" #website address error
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            print(response.text.strip())
-        else:
-            print(f"상태코드: {response.status_code}")
-    except Exception as err:
-        print(f"오류: {err}")
+    print(get_weather_info())
     print("="*30)
     menu_texts = "".join([f"{j+1}) {drinks[j]} {prices[j]}원\n" for j in range(len(drinks))])
     menu_texts = menu_texts + f"{len(drinks)+1}) 주문종료 : "
@@ -128,9 +119,21 @@ def print_receipt() -> None:
         print(f"할인이 적용 되지 않았습니다.\n지불하실 총 금액은 {total_price}원 입니다")
     print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-def test() -> None:
+def get_weather_info() -> str:
     """
-
-    :return:
+    날씨 정보(http://wttr.in)
+    :return: 날씨 정보를 요약한 문자열
     """
-    pass
+    url = f"http://wttr.in/suwon?format=2"
+    # url = f"http://wttr.in/suwon?&0&Q&lang=ko"
+    # url = f"http://wttr.in/suwon?format=%C+%t&lang=ko"
+    # url = f"http://naver.com/kim"  #404 page not found
+    # url = f"http://wttr123.in/suwon?format=%C+%t&lang=ko" #website address error
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.text.strip()
+        else:
+            return f"상태코드: {response.status_code}"
+    except Exception as err:
+        return f"오류: {err}"
